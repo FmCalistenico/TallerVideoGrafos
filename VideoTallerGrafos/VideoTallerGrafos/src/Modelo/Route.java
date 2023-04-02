@@ -1,33 +1,42 @@
 package Modelo;
 
-public class Route {
+import org.apache.commons.collections15.Transformer;
 
-	private String name;
+//import org.apache.commons.collections15.Transformer;
+
+public class Route {
+	private Station source;
+	private Station target;
 	private int weight;
 
-	public Route(String name, int weight) {
-		this.name = name;
+	public Route(Station source, Station target, int weight) {
+		this.source = source;
+		this.target = target;
 		this.weight = weight;
 	}
 
-	public String getName() {
-		return name;
+	public Station getSource() {
+		return source;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public Station getTarget() {
+		return target;
 	}
 
 	public int getWeight() {
 		return weight;
 	}
 
-	public void setWeight(int weight) {
-		this.weight = weight;
-	}
-
 	@Override
 	public String toString() {
-		return name;
+		return source + " -> " + target + " (" + weight + ")";
+	}
+
+	public static Transformer<Route, Double> getWeightTransformer() {
+		return new Transformer<Route, Double>() {
+			public Double transform(Route edge) {
+				return (double) edge.getWeight();
+			}
+		};
 	}
 }
