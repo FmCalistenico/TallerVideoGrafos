@@ -10,10 +10,17 @@ import edu.uci.ics.jung.visualization.*;
 import edu.uci.ics.jung.visualization.decorators.ToStringLabeller;
 import edu.uci.ics.jung.visualization.renderers.Renderer;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import Modelo.Station;
 
@@ -25,14 +32,16 @@ public class Run {
 
 		Graph<Station, Route> grafo = new SparseGraph<Station, Route>();
 		// Crear estaciones
-		Station stationA = new Station("A");
-		Station stationB = new Station("B");
-		Station stationC = new Station("C");
-		Station stationD = new Station("D");
-		Station stationE = new Station("E");
-		Station stationF = new Station("F");
-		Station stationG = new Station("G");
-		Station stationH = new Station("H");
+		Station stationA = new Station("Bogota");
+		Station stationB = new Station("Medellin");
+		Station stationC = new Station("Cali");
+		Station stationD = new Station("Barranquilla");
+		Station stationE = new Station("Cartagena");
+		Station stationF = new Station("Bucaramanga");
+		Station stationG = new Station("Pereira");
+		Station stationH = new Station("Manizales");
+		Station stationI = new Station("Armenia");
+		Station stationJ = new Station("Ibague");
 
 		// Añadir estaciones al grafo
 		grafo.addVertex(stationA);
@@ -43,81 +52,108 @@ public class Run {
 		grafo.addVertex(stationF);
 		grafo.addVertex(stationG);
 		grafo.addVertex(stationH);
+		grafo.addVertex(stationI);
+		grafo.addVertex(stationJ);
 
 		// Crear rutas y añadirlas al grafo con su respectiva distancia en km
-		Route ab = new Route(stationA, stationB, 2.9);
-		Route ac = new Route(stationA, stationC, 3.1);
-		Route bc = new Route(stationB, stationC, 1.6);
-		Route bd = new Route(stationB, stationD, 2.2);
-		Route da = new Route(stationD, stationA, 2.2);
-		Route de = new Route(stationD, stationE, 1.8);
-		Route ef = new Route(stationE, stationF, 1.4);
-		Route cf = new Route(stationC, stationF, 2.7);
-		Route gh = new Route(stationG, stationH, 3.9);
-		Route ae = new Route(stationA, stationE, 4.5);
-		Route bh = new Route(stationB, stationH, 5.1);
-		Route cg = new Route(stationC, stationG, 2.2);
-		Route df = new Route(stationD, stationF, 2.5);
+		Route bogotaMedellin = new Route(stationA, stationB, 506.5);
+		Route bogotaCali = new Route(stationA, stationC, 465.7);
+		Route bogotaBarranquilla = new Route(stationA, stationD, 1000);
+		Route barranquillaCartagena = new Route(stationD, stationE, 134.3);
+		Route medellinPereira = new Route(stationB, stationG, 212.14);
+		Route medellinManizales = new Route(stationB, stationH, 195.7);
+		Route manizalesArmenia = new Route(stationH, stationI, 97.1);
+		Route armeniaPereira = new Route(stationI, stationG, 45.4);
+		Route caliPereira = new Route(stationC, stationG, 209.3);
+		Route caliBucaramanga = new Route(stationC, stationF, 764.6);
+		Route bucaramangaBogota = new Route(stationF, stationA, 424.2);
+		Route bucaramangaMedellin = new Route(stationF, stationB, 381.9);
+		Route pereiraIbague = new Route(stationG, stationJ, 115.4);
+		Route ibagueBogota = new Route(stationJ, stationA, 211.1);
 
-		grafo.addEdge(ab, stationA, stationB, EdgeType.UNDIRECTED);
-		grafo.addEdge(ac, stationA, stationC, EdgeType.UNDIRECTED);
-		grafo.addEdge(bc, stationB, stationC, EdgeType.UNDIRECTED);
-		grafo.addEdge(bd, stationB, stationD, EdgeType.DIRECTED);
-		grafo.addEdge(da, stationD, stationA, EdgeType.DIRECTED);
-		grafo.addEdge(de, stationD, stationE, EdgeType.DIRECTED);
-		grafo.addEdge(ef, stationE, stationF, EdgeType.DIRECTED);
-		grafo.addEdge(cf, stationC, stationF, EdgeType.UNDIRECTED);
-		grafo.addEdge(gh, stationG, stationH, EdgeType.DIRECTED);
-		grafo.addEdge(ae, stationA, stationE, EdgeType.DIRECTED);
-		grafo.addEdge(bh, stationB, stationH, EdgeType.DIRECTED);
-		grafo.addEdge(cg, stationC, stationG, EdgeType.DIRECTED);
-		grafo.addEdge(df, stationD, stationF, EdgeType.DIRECTED);
+		grafo.addEdge(bogotaMedellin, stationA, stationB, EdgeType.UNDIRECTED);
+		grafo.addEdge(bogotaCali, stationA, stationC, EdgeType.UNDIRECTED);
+		grafo.addEdge(bogotaBarranquilla, stationA, stationD, EdgeType.UNDIRECTED);
+		grafo.addEdge(barranquillaCartagena, stationD, stationE, EdgeType.UNDIRECTED);
+		grafo.addEdge(medellinPereira, stationB, stationG, EdgeType.UNDIRECTED);
+		grafo.addEdge(medellinManizales, stationB, stationH, EdgeType.UNDIRECTED);
+		grafo.addEdge(manizalesArmenia, stationH, stationI, EdgeType.UNDIRECTED);
+		grafo.addEdge(armeniaPereira, stationI, stationG, EdgeType.UNDIRECTED);
+		grafo.addEdge(caliPereira, stationC, stationG, EdgeType.UNDIRECTED);
+		grafo.addEdge(caliBucaramanga, stationC, stationF, EdgeType.UNDIRECTED);
+		grafo.addEdge(bucaramangaBogota, stationF, stationA, EdgeType.UNDIRECTED);
+		grafo.addEdge(bucaramangaMedellin, stationF, stationB, EdgeType.UNDIRECTED);
+		grafo.addEdge(pereiraIbague, stationG, stationJ, EdgeType.UNDIRECTED);
+		grafo.addEdge(ibagueBogota, stationJ, stationA, EdgeType.UNDIRECTED);
 
-		
+//		grafo.addEdge(ibagueCali, stationJ, stationC, EdgeType.UNDIRECTED);
+
+		DijkstraShortestPath<Station, Route> dijkstra = new DijkstraShortestPath<Station, Route>(grafo);
+
+		// Creación del grafo
 		VisualizationViewer<Station, Route> PantallaGrafo = new VisualizationViewer<Station, Route>(
-				new CircleLayout<Station, Route>(grafo), new Dimension(400, 400));
-
+				new CircleLayout<Station, Route>(grafo), new Dimension(400, 500));
 		PantallaGrafo.getRenderContext().setVertexLabelTransformer(new ToStringLabeller<Station>());
 		PantallaGrafo.getRenderer().getVertexLabelRenderer().setPosition(Renderer.VertexLabel.Position.CNTR);
 
-		JFrame frame = new JFrame("Grafo Sobre estaciones de una ciudad imaginaria");
+		// Ventana principal
+		JFrame frame = new JFrame("Estaciones de una ciudad imaginaria");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().add(PantallaGrafo);
+
+		// Panel para los campos de texto y botón
+		JPanel panel = new JPanel(new FlowLayout());
+		panel.setBorder(BorderFactory.createTitledBorder("Buscar ruta"));
+		JTextField ciudadInicial = new JTextField(10);
+		JTextField ciudadFinal = new JTextField(10);
+		JButton buscarBtn = new JButton("Buscar");
+		panel.add(new JLabel("Desde: "));
+		panel.add(ciudadInicial);
+		panel.add(new JLabel("Hasta: "));
+		panel.add(ciudadFinal);
+		panel.add(buscarBtn);
+		frame.getContentPane().add(panel, BorderLayout.NORTH);
+
+		// Panel para la información de la ruta
+		JPanel infoPanel = new JPanel(new FlowLayout());
+		infoPanel.setBorder(BorderFactory.createTitledBorder("Información de la ruta"));
+		JLabel distanciaLabel = new JLabel();
+		infoPanel.add(distanciaLabel);
+		frame.getContentPane().add(infoPanel, BorderLayout.SOUTH);
+
+		// Acción del botón buscar
+		buscarBtn.addActionListener((ActionEvent) -> {
+			Station estacionInicial = null;
+			for (Station nodo : grafo.getVertices()) {
+				if (ciudadInicial.getText().equalsIgnoreCase(nodo.getName())) {
+					estacionInicial = nodo;
+					break;
+				}
+			}
+			Station estacionFinal = null;
+			for (Station nodo : grafo.getVertices()) {
+				if (ciudadFinal.getText().equalsIgnoreCase(nodo.getName())) {
+					estacionFinal = nodo;
+					break;
+				}
+			}
+
+			double distanciaRecorrida = 0.0;
+			try {
+				for (Route v : dijkstra.getPath(estacionInicial, estacionFinal)) {
+					distanciaRecorrida += Double.valueOf(v.getWeight());
+				}
+				distanciaLabel.setText("La ruta más corta desde " + ciudadInicial.getText() + " hasta "
+						+ ciudadFinal.getText() + " es de " + distanciaRecorrida + " Km.");
+			} catch (Exception ex) {
+				distanciaLabel.setText("No se pudo encontrar una ruta válida.");
+			}
+
+		});
+
+		// Mostrar la ventana
 		frame.pack();
 		frame.setVisible(true);
-
-		double distanciaRecorrida = 0.0;
-
-		
-		DijkstraShortestPath<Station, Route> dijkstra = new DijkstraShortestPath<Station, Route>(grafo);
-		String ciudadInicial = JOptionPane.showInputDialog("Digite la ciudad desde donde quiere ir:");
-		Station estacionInicial = null;
-		for (Station nodo : grafo.getVertices()) {
-			if (ciudadInicial.equalsIgnoreCase(nodo.getName())) {
-				estacionInicial = nodo;
-				break;
-			}
-		}
-		String ciudadFinal = JOptionPane.showInputDialog("Digite la ciudad a la que quiere llegar:");
-		Station estacionFinal = null;
-		for (Station nodo : grafo.getVertices()) {
-			if (ciudadFinal.equalsIgnoreCase(nodo.getName())) {
-				estacionFinal = nodo;
-				break;
-			}
-		}
-		try {
-
-			for (Route v : dijkstra.getPath(estacionInicial, estacionFinal)) {
-				distanciaRecorrida += Double.valueOf(v.getWeight());
-
-			}
-			JOptionPane.showMessageDialog(null, "La ruta más corta desde " + ciudadInicial + " hasta " + ciudadFinal
-					+ " son " + distanciaRecorrida + " Km");
-		} catch (Exception e) {
-		
-			JOptionPane.showMessageDialog(null, "La ciudad ingresada no es valida");
-		}
 	}
 
 }
