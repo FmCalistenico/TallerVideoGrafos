@@ -30,8 +30,10 @@ public class Run {
 
 	public static void main(String[] args) {
 
-		Graph<Station, Route> grafo = new SparseGraph<Station, Route>();
-		// Crear estaciones
+		//Graph<Station, Route> grafo = new SparseGraph<Station, Route>();
+		Graph<Station, Route> grafo = new DirectedSparseGraph<>();
+
+		
 		Station stationA = new Station("Bogota");
 		Station stationB = new Station("Medellin");
 		Station stationC = new Station("Cali");
@@ -43,7 +45,7 @@ public class Run {
 		Station stationI = new Station("Armenia");
 		Station stationJ = new Station("Ibague");
 
-		// Añadir estaciones al grafo
+
 		grafo.addVertex(stationA);
 		grafo.addVertex(stationB);
 		grafo.addVertex(stationC);
@@ -55,7 +57,7 @@ public class Run {
 		grafo.addVertex(stationI);
 		grafo.addVertex(stationJ);
 
-		// Crear rutas y añadirlas al grafo con su respectiva distancia en km
+		
 		Route bogotaMedellin = new Route(stationA, stationB, 506.5);
 		Route bogotaCali = new Route(stationA, stationC, 465.7);
 		Route bogotaBarranquilla = new Route(stationA, stationD, 1000);
@@ -86,22 +88,20 @@ public class Run {
 		grafo.addEdge(pereiraIbague, stationG, stationJ, EdgeType.UNDIRECTED);
 		grafo.addEdge(ibagueBogota, stationJ, stationA, EdgeType.UNDIRECTED);
 
-//		grafo.addEdge(ibagueCali, stationJ, stationC, EdgeType.UNDIRECTED);
 
 		DijkstraShortestPath<Station, Route> dijkstra = new DijkstraShortestPath<Station, Route>(grafo);
 
-		// Creación del grafo
+		
 		VisualizationViewer<Station, Route> PantallaGrafo = new VisualizationViewer<Station, Route>(
-				new CircleLayout<Station, Route>(grafo), new Dimension(400, 500));
+				new CircleLayout<Station, Route>(grafo), new Dimension(490, 510));
 		PantallaGrafo.getRenderContext().setVertexLabelTransformer(new ToStringLabeller<Station>());
 		PantallaGrafo.getRenderer().getVertexLabelRenderer().setPosition(Renderer.VertexLabel.Position.CNTR);
 
-		// Ventana principal
+		
 		JFrame frame = new JFrame("Estaciones de una ciudad imaginaria");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().add(PantallaGrafo);
 
-		// Panel para los campos de texto y botón
 		JPanel panel = new JPanel(new FlowLayout());
 		panel.setBorder(BorderFactory.createTitledBorder("Buscar ruta"));
 		JTextField ciudadInicial = new JTextField(10);
@@ -114,14 +114,14 @@ public class Run {
 		panel.add(buscarBtn);
 		frame.getContentPane().add(panel, BorderLayout.NORTH);
 
-		// Panel para la información de la ruta
+		
 		JPanel infoPanel = new JPanel(new FlowLayout());
 		infoPanel.setBorder(BorderFactory.createTitledBorder("Información de la ruta"));
 		JLabel distanciaLabel = new JLabel();
 		infoPanel.add(distanciaLabel);
 		frame.getContentPane().add(infoPanel, BorderLayout.SOUTH);
 
-		// Acción del botón buscar
+		
 		buscarBtn.addActionListener((ActionEvent) -> {
 			Station estacionInicial = null;
 			for (Station nodo : grafo.getVertices()) {
@@ -151,7 +151,7 @@ public class Run {
 
 		});
 
-		// Mostrar la ventana
+
 		frame.pack();
 		frame.setVisible(true);
 	}
