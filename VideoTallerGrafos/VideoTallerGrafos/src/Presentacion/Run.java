@@ -2,7 +2,7 @@ package Presentacion;
 
 import java.util.List;
 
-import edu.uci.ics.jung.algorithms.layout.CircleLayout;
+import edu.uci.ics.jung.algorithms.layout.*;
 import edu.uci.ics.jung.algorithms.shortestpath.DijkstraShortestPath;
 import edu.uci.ics.jung.graph.*;
 import edu.uci.ics.jung.graph.util.EdgeType;
@@ -30,10 +30,9 @@ public class Run {
 
 	public static void main(String[] args) {
 
-		//Graph<Station, Route> grafo = new SparseGraph<Station, Route>();
-		Graph<Station, Route> grafo = new DirectedSparseGraph<>();
+		Graph<Station, Route> grafo = new SparseMultigraph<Station, Route>();
+//		Graph<Station, Route> grafo = new DirectedSparseGraph<Station, Route>();
 
-		
 		Station stationA = new Station("Bogota");
 		Station stationB = new Station("Medellin");
 		Station stationC = new Station("Cali");
@@ -44,7 +43,6 @@ public class Run {
 		Station stationH = new Station("Manizales");
 		Station stationI = new Station("Armenia");
 		Station stationJ = new Station("Ibague");
-
 
 		grafo.addVertex(stationA);
 		grafo.addVertex(stationB);
@@ -57,7 +55,6 @@ public class Run {
 		grafo.addVertex(stationI);
 		grafo.addVertex(stationJ);
 
-		
 		Route bogotaMedellin = new Route(stationA, stationB, 506.5);
 		Route bogotaCali = new Route(stationA, stationC, 465.7);
 		Route bogotaBarranquilla = new Route(stationA, stationD, 1000);
@@ -88,17 +85,14 @@ public class Run {
 		grafo.addEdge(pereiraIbague, stationG, stationJ, EdgeType.UNDIRECTED);
 		grafo.addEdge(ibagueBogota, stationJ, stationA, EdgeType.UNDIRECTED);
 
-
 		DijkstraShortestPath<Station, Route> dijkstra = new DijkstraShortestPath<Station, Route>(grafo);
 
-		
 		VisualizationViewer<Station, Route> PantallaGrafo = new VisualizationViewer<Station, Route>(
-				new CircleLayout<Station, Route>(grafo), new Dimension(490, 510));
+				new KKLayout<Station, Route>(grafo), new Dimension(600, 500));
 		PantallaGrafo.getRenderContext().setVertexLabelTransformer(new ToStringLabeller<Station>());
 		PantallaGrafo.getRenderer().getVertexLabelRenderer().setPosition(Renderer.VertexLabel.Position.CNTR);
 
-		
-		JFrame frame = new JFrame("Estaciones de una ciudad imaginaria");
+		JFrame frame = new JFrame("Principales Rutas en Colombia");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().add(PantallaGrafo);
 
@@ -114,14 +108,12 @@ public class Run {
 		panel.add(buscarBtn);
 		frame.getContentPane().add(panel, BorderLayout.NORTH);
 
-		
 		JPanel infoPanel = new JPanel(new FlowLayout());
 		infoPanel.setBorder(BorderFactory.createTitledBorder("Información de la ruta"));
 		JLabel distanciaLabel = new JLabel();
 		infoPanel.add(distanciaLabel);
 		frame.getContentPane().add(infoPanel, BorderLayout.SOUTH);
 
-		
 		buscarBtn.addActionListener((ActionEvent) -> {
 			Station estacionInicial = null;
 			for (Station nodo : grafo.getVertices()) {
@@ -150,7 +142,6 @@ public class Run {
 			}
 
 		});
-
 
 		frame.pack();
 		frame.setVisible(true);
