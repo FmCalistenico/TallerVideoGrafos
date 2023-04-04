@@ -31,7 +31,6 @@ public class Run {
 	public static void main(String[] args) {
 
 		Graph<Station, Route> grafo = new SparseMultigraph<Station, Route>();
-//		Graph<Station, Route> grafo = new DirectedSparseGraph<Station, Route>();
 
 		Station stationA = new Station("Bogota");
 		Station stationB = new Station("Medellin");
