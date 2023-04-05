@@ -1,9 +1,5 @@
 package Modelo;
 
-import org.apache.commons.collections15.Transformer;
-
-//import org.apache.commons.collections15.Transformer;
-
 public class Route {
 	private Station source;
 	private Station target;
@@ -39,16 +35,5 @@ public class Route {
 		this.weight = weight;
 	}
 
-	@Override
-	public String toString() {
-		return source + " -> " + target + " (" + weight + ")";
-	}
 
-	public static Transformer<Route, Double> getWeightTransformer() {
-		return new Transformer<Route, Double>() {
-			public Double transform(Route edge) {
-				return (double) edge.getWeight();
-			}
-		};
-	}
 }

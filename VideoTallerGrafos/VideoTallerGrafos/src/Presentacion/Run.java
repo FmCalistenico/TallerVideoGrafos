@@ -1,6 +1,6 @@
 package Presentacion;
 
-import java.util.List;
+
 
 import edu.uci.ics.jung.algorithms.layout.*;
 import edu.uci.ics.jung.algorithms.shortestpath.DijkstraShortestPath;
@@ -18,10 +18,8 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
 import Modelo.Station;
 
 import Modelo.Route;;
